@@ -1,6 +1,4 @@
 # docker_2020
-# docker_2020
-
 
 Docker Toolbox is old school for macos/win.
 It contains virtualbox and runs a few tools in addition to docker for win/mac.
