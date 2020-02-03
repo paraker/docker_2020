@@ -38,13 +38,14 @@ It's something that defines dependencies in one place and it can be version cont
 A docker image consists of layers.<br>
 Build and pull understands these layers and will only update the ones that are required (if cache is enabled).
 
-## Docker Registry and dockerhub
-Contains multiple docker repositories
-
-Each repo contains multiple images
-
-Each docker image is defined by tags.
-
+## Docker Registry, dockerhub and official repos
 Official repos at dockerhub are managed by Docker. These images are all scanned by Docker. You can see all vulnerabilties on their site.
 
+Most official programming language images have these standard base images:<br>
+* slim - based on debian:jessie (or someting later now). This is stability releases.
+* alpine - super lightweight linux
+* wheezy - older version of debian
+
+## Alpine linux
+Alpine is made "FROM scratch" (meaning that you start from nothing
 
