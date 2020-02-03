@@ -21,6 +21,19 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 # Copy everything from our local directory into /app in the container
-# This will copy the Dockerfile, the Dockerfile.finished etc
+# This is to copy all source code into the container.
+# This will copy the Dockerfile, the Dockerfile.finished too thought if you were wondering
 # It goes into /app because that's our workdir.
 COPY . .
+
+# Key and value that can be retrieved later on
+# These can be used for filters etc
+# key="value". quotes are mandatory around value
+# Note how MAINTAINER will be deprecated, so use LABEL for maintainer
+# Each label creates a layer, so bunch them up with linux multiline style \
+LABEL maintainer="Par Will <par.whatever@whatever.com>" \
+	  version="1.0"
+
+# CMD is the command that will be executed when the container is run
+# Here we are just executing a flask command to start a web server
+CMD flask run --host=0.0.0.0 --port=5000
