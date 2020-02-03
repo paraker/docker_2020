@@ -1,5 +1,8 @@
 # The first uncommented line of a Dockerfile must be "FROM"
-FROM python-3.7.5-alpine
+# official dockerhub repo = omitted. dockercli assumes this.
+# image = python
+# tag = 3.7.6-alpine
+FROM python:3.7.6-alpine
 
 # RUN lets us run any command or shell script
 # Create a folder to store an app
