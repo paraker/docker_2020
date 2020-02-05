@@ -1,13 +1,8 @@
-# docker help
-Management commands are the most used commands.
-~~~~
-docker --help
-~~~~
-
 # Dockerfile
 see Dockerfile for inline documentation
 
 # docker build
+## build your build
 Builds a docker image with the repo web1 in the current directory. Note how tags for the repo are set with repo:tag!
 ~~~~
 # short version
@@ -44,7 +39,7 @@ Step 2/8 : RUN mkdir /app
 ~~~~
 If a layer changes, every layer after that layer that was changed is rebuilt too, without using cache.
 
-## Inspect your build
+## inspect your build
 You can print information about your build with `docker image inspect <repo>`
 ~~~~
 docker image inspect web1
@@ -54,8 +49,9 @@ This will for example show:
 * Docker version this was built in
 * The layers' full hash values
 * The CMD (i.e. the command that will be run)
+* The network configuration, i.e. bridged or overlay
 
-## Delete your build
+## delete your build
 You can delete a single image by referring to the image name or the image id
 ~~~~
 # repo version
@@ -88,12 +84,14 @@ Deleted: sha256:5529e9a6a04329b02e9ff99af6fdb2c3ac26eb4d4a946c1d50235e9966852e3d
 For dockerhub, you need to tag your image with your username/reponame:tag<br>
 I think the same applies to AWS ECR as well.
 ~~~~
+# add tag "paak/web1:latest" to image web1
 docker image tag web1 paak/web1:latest
 ~~~~
 In my case, the image then lands at [my dockerhub page](https://hub.docker.com/r/paak/)
 
 You can't remove a tag, but you can change tags on images if you want.
 ~~~~
+# changes tag from "paak/web1:latest" to "web1:latest"
 docker image tag paak/web1:latest web1:latest
 ~~~~
 
@@ -126,6 +124,9 @@ docker container run -it -p 5000:5000 --name my_flask_app --rm -e FLASK_APP=app.
 
 # run container in background
 docker container run --interactive --tty --publish 5000:5000 --name my_flask_app --rm --env FLASK_APP=app.py --detach web1
+
+# run container in backgroun short version
+docker container run -itd -p 5000:5000 --name my_flask_app --rm -e FLASK_APP=app.py web1
 ~~~~
 
 ## view running containers
@@ -174,3 +175,16 @@ If you do happen to have containers you want to delete you can issue `docker con
 docker container rm focused_lichterman 
 focused_lichterman
 ~~~~
+
+# Container modifications
+## production deployments
+Your source code should be in version control. The source code should be copied while building images in a lifecycle process and with ci/cd.
+
+See `Dockerfile` and `docker build` topics in this readme to declare and build your image.
+
+## development deployments
+To quickly be able to reiterate over docker builds you may edit containers as they are running.<br>
+
+By edit the containers we refer to mounting a `volume` containing the source code to our app.<br>
+Modifications to the volume are happening live in the running container (well, with caveats depending on distro, for example [alpine linux's inotifyd](https://wiki.alpinelinux.org/wiki/Inotifyd))<br>
+This volume is persistent to the `docker host` and circumvents the idempotence of the container.<br>
