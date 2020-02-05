@@ -1,7 +1,7 @@
 # Updates:
 #   Nov 2019: Update base Docker image to use a more recent version of Python
 #             You can also use python:3.7.5-slim-buster for a Debian image
-FROM python:3.7.5-alpine
+FROM python:3.7.6-alpine
 
 RUN mkdir /app
 WORKDIR /app
@@ -11,7 +11,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>" \
+LABEL maintainer="Par Will <par.will@whatever.com>" \
       version="1.0"
 
 CMD flask run --host=0.0.0.0 --port=5000
