@@ -218,19 +218,22 @@ Your source code should be in version control. The source code should be copied 
 See `Dockerfile` and `docker build` topics in this readme to declare and build your image.
 
 ## development deployments
-To quickly be able to reiterate over docker builds you may edit containers as they are running.<br>
+To quickly be able to reiterate over docker builds you may edit containers as they are running with volumes.<br>
 
+### mount volumes for quick testing
 By edit the containers we refer to mounting a `volume` containing the source code to our app.<br>
 Modifications to the volume are happening live in the running container (well, with caveats depending on distro, for example [alpine linux's inotifyd](https://wiki.alpinelinux.org/wiki/Inotifyd)'s issues with virtualbox and hyperv')<br>
 This volume is persistent to the `docker host` and circumvents the idempotence of the container.<br>
 
-### mount volumes
+See the `run containers` section of this readme for syntax.<br>
+Note that multiple `--volume` flags can be used for mount multiple volumes.
 
-### user/group for files written to disk (linux only)
+### user/group for files written to host disk (linux only)
 Say that you mount volumes on linux and create files through `docker exec`. By default, this will resort to the `root` user in the container's user space.<br>
 As such, you may end up witf files owned by `root` on your local disk.<br>
 
 ~~~~
+# assumes you've mounted a volume as per the "run containers" section of this readme
 # create test.txt as default user (root)
 docker container exec --interactive --tty app_1 touch test.txt
 
