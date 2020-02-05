@@ -30,12 +30,12 @@ Build and pull understands these layers and will only update the ones that are r
 A running image. These are immutable, i.e. changes are not persistent. (well, you can make them non immutable through volumes). <br>
 This is an instance of a class in the programming world.
 
-## Dockerfile (blueprint/cookie cutter)
+### Dockerfile
 It's a run sheet of how your docker images are built.<br>
 The Dockerfile is sort of equivalent to a requirements.txt in the python world. <br>
 It's something that defines dependencies in one place and it can be version controlled.
 
-## Docker Registry, dockerhub and official repos
+### Docker Registry, dockerhub and official repos
 Official repos at dockerhub are managed by Docker. These images are all scanned by Docker.<br>
 You can see all vulnerabilties on their site.<br>
 
@@ -46,5 +46,5 @@ Most official programming language images have these standard base images:<br>
 * buster - debian 10
 * stretch - debian 9
 
-## Alpine linux
+### Alpine linux
 [Alpine Linux](https://github.com/alpinelinux) is a security-oriented, lightweight Linux distribution based on musl libc and busybox.
