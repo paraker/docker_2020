@@ -16,7 +16,7 @@ WORKDIR /app
 # NOTE You can't go above your Dockerfile's directory!
 # i.e. you can't run ../requirements.txt
 # The below will copy ./requirements.txt to /app/requirements.txt
-COPY requirements.txt requirements.txt
+COPY requirements.txt .
 # Full paths works as well of course, like:
 # COPY requirements.txt /app/requirements.txt
 
