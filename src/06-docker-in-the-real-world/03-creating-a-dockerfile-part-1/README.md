@@ -4,6 +4,9 @@ Management commands are the most used commands.
 docker --help
 ~~~~
 
+# Dockerfile
+see Dockerfile for inline documentation
+
 # docker build
 Builds a docker image with the repo web1 in the current directory. Note how tags for the repo are set with repo:tag!
 ~~~~
@@ -46,3 +49,7 @@ You can print information about your build with `docker image inspect <repo>`
 ~~~~
 docker image inspect web1
 ~~~~
+This will for example show:
+* Docker version this was built in
+* The layers' full hash values
+* The CMD (i.e. the command that will be run)
