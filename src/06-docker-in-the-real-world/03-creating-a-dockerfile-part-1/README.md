@@ -129,7 +129,7 @@ docker container run --interactive --tty --publish 5000:5000 --name my_flask_app
 # run container in background short version
 docker container run -itd -p 5000:5000 --name my_flask_app --rm -e FLASK_APP=app.py web1
 
-# run container with volume
+# run container with volume for development purposes
 docker container run --interactive --tty --publish 5000:5000 --name my_flask_app --rm --env FLASK_APP=app.py --env FLASK_DEBUG=1 --volume "$PWD:/app" --detach web1
 ~~~~
 
@@ -184,7 +184,9 @@ docker container inspect my_flask_app
 ~~~~
 
 # connecting to containers
-To connect to a running container you can run the `docker container exec --interactive --tty [container name/id] [command]` command. Where `command` is what you want to execute.
+To connect to a running container you can run the `docker container exec --interactive --tty [container name/id] [command]` command. Where `command` is what you want to execute.<br>
+
+You can specify a particular user if you want with the `--user [user]` command. Default is `root`.
 
 ~~~~
 # run a shell in an alpine container called web_1
