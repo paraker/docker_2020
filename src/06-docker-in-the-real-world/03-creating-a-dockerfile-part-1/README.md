@@ -129,7 +129,7 @@ docker container run --interactive --tty --publish 5000:5000 --name my_flask_app
 docker container run -itd -p 5000:5000 --name my_flask_app --rm -e FLASK_APP=app.py web1
 ~~~~
 
-## view running containers
+# view containers
 Utilise the `docker container ls -a` command to view all running and stopped containers.<br>
 Note how the stopped containers don't consume much space, but it's nice to have it tidy, so do utilise the `--rm` flag when running an image to not have exited containers lying around.
 ~~~~
@@ -159,8 +159,8 @@ d843c9e35be6        my_flask_app        0.01%               20.66MiB / 15.11GiB 
 
 ~~~~
 
-## stopping containers
-`docker container stop [container name/id]` will stop your container.<br>
+# stopping containers
+To stop your containers you can run`docker container stop [container name/id]`.<br>
 Depending on the `--rm` or the `--restart` flag settings, the container will either be deleted or exited.<br>
 NOTE: The manual stop of a container will NOT trigger a restart even if the `--restart` policy is set.<br>
 This is because you manuall intended to stop the image.<br>
@@ -169,7 +169,7 @@ However, an event like you shutting down the docker service will indeed restart 
 docker container stop my_flask_app 
 ~~~~
 
-## delete containers
+# delete containers
 If you do happen to have containers you want to delete you can issue `docker container rm [name or id]` to remove them.
 ~~~~
 docker container rm focused_lichterman 
