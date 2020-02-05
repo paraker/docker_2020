@@ -114,13 +114,17 @@ We can view my image at [my dockerhub page](https://hub.docker.com/r/paak/)
 `--interactive` `--tty` or `-it` enables Ctrl-C sequence, terminal colours and interactivity.<br>
 `--rm` automatically removes the container when it exits.<br>
 `--env` or `-e` passes in environment variables<br>
-`--name` names your container. If this isn't supplied, docker will generate a name for you.
+`--name` names your container. If this isn't supplied, docker will generate a name for you.<br>
+`--detach` or `-d` runs the container in the background and just prints a container id to standard out.<br>
 ~~~~
 # long version
 docker container run --interactive --tty --publish 5000:5000 --name my_flask_app --rm --env FLASK_APP=app.py web1
 
 # short version
-docker container run -it -p 5000:5000
+docker container run -it -p 5000:5000 --name my_flask_app --rm -e FLASK_APP=app.py web1
+
+# run container in background
+docker container run --interactive --tty --publish 5000:5000 --name my_flask_app --rm --env FLASK_APP=app.py --detach web1
 ~~~~
 
 ## view running containers
@@ -131,4 +135,31 @@ docker container ls -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                    PORTS                    NAMES
 477f07cdcff4        web1                "/bin/sh -c 'flask r…"   15 seconds ago      Up 14 seconds             0.0.0.0:5000->5000/tcp   my_flask_app
 03c371f26868        hello-world         "/hello"                 40 hours ago        Exited (0) 40 hours ago                            focused_lichterman
+~~~~
+
+## view logs from containers 
+You can see what's happening or what has happened in a container that is running in the foreground, that is detached, or that has exited.<br>
+Issue the `docker container logs [container name/id]`<br>
+Add `-f` to "tail -f" the log.
+~~~~
+docker container logs -f my_flask_app
+ * Serving Flask app "app.py"
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+~~~~
+
+## view resource usage of your container
+You can get realtime stats of your container by issuing the command `docker stats [container name/id]`
+~~~~
+docker container stats my_flask_app
+CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS
+d843c9e35be6        my_flask_app        0.01%               20.66MiB / 15.11GiB   0.13%               2.98kB / 0B         0B / 0B             1
+
+~~~~
+
+## delete containers
+If you do happen to have containers you want to delete you can issue `docker container rm [name or id]` to remove them.
+~~~~
+docker container rm focused_lichterman 
+focused_lichterman
 ~~~~
