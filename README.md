@@ -21,7 +21,7 @@
 ## Optimise docker image sizes at [src/docker-in-the-real-world/optimise](https://github.com/paraker/docker_2020/tree/master/src/06-docker-in-the-real-world/12-optimizing-your-docker-images)
 * sample optimised Dockerfile for alpine packages
 
-## How to automatically run custom scripts when a container starts at [src/docker-in-the-real-world/scripts](https://github.com/paraker/docker_2020/tree/master/src/06-docker-in-the-real-world/13-running-scripts-when-a-container-starts)
+## Run custom scripts at container start at [src/docker-in-the-real-world/scripts](https://github.com/paraker/docker_2020/tree/master/src/06-docker-in-the-real-world/13-running-scripts-when-a-container-starts)
 * 
 
 ## Topics
