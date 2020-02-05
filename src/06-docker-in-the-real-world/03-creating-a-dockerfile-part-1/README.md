@@ -116,6 +116,7 @@ We can view my image at [my dockerhub page](https://hub.docker.com/r/paak/)
 `--env` or `-e` passes in environment variables<br>
 `--name` names your container. If this isn't supplied, docker will generate a name for you.<br>
 `--detach` or `-d` runs the container in the background and just prints a container id to standard out.<br>
+`--restart on-failure[:max-retries] / always` automatically restarts the container if it would fail. This conflicts with the `--rm` flag.
 ~~~~
 # long version
 docker container run --interactive --tty --publish 5000:5000 --name my_flask_app --rm --env FLASK_APP=app.py web1
@@ -148,13 +149,23 @@ docker container logs -f my_flask_app
    WARNING: This is a development server. Do not use it in a production deployment.
 ~~~~
 
-## view resource usage of your container
-You can get realtime stats of your container by issuing the command `docker stats [container name/id]`
+## view resource usage of your containers
+You can get realtime stats of your container by issuing the command `docker container stats` for all containers, or docker `container stats [container name/id]` for a specific container.
 ~~~~
 docker container stats my_flask_app
 CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS
 d843c9e35be6        my_flask_app        0.01%               20.66MiB / 15.11GiB   0.13%               2.98kB / 0B         0B / 0B             1
 
+~~~~
+
+## stopping containers
+`docker container stop [container name/id]` will stop your container.<br>
+Depending on the `--rm` or the `--restart` flag settings, the container will either be deleted or exited.<br>
+NOTE: The manual stop of a container will NOT trigger a restart even if the `--restart` policy is set.<br>
+This is because you manuall intended to stop the image.<br>
+However, an event like you shutting down the docker service will indeed restart the container.
+~~~~
+docker container stop my_flask_app 
 ~~~~
 
 ## delete containers
