@@ -50,6 +50,13 @@ You can print information about your build with `docker image inspect <repo>`
 docker image inspect web1
 ~~~~
 This will for example show:
+* All tags of this particular image (if an image has multiple tags)
 * Docker version this was built in
 * The layers' full hash values
 * The CMD (i.e. the command that will be run)
+
+# docker push
+Before you can push to a location, you need to authenticate to it with docker login [your repo]
+~~~~
+docker image tag web1 paak/web1:latest
+~~~~
