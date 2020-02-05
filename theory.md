@@ -47,5 +47,5 @@ Most official programming language images have these standard base images:<br>
 * wheezy - older version of debian
 
 ## Alpine linux
-Alpine is made "FROM scratch" (meaning that you start from nothing
+Alpine is made "FROM scratch" (meaning that you start from nothing in your Dockerfile)
 
