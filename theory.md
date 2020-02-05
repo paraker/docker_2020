@@ -41,11 +41,12 @@ Build and pull understands these layers and will only update the ones that are r
 ## Docker Registry, dockerhub and official repos
 Official repos at dockerhub are managed by Docker. These images are all scanned by Docker. You can see all vulnerabilties on their site.
 
+Explore [official docker images at dockehub](https://hub.docker.com/search?q=&type=image&image_filter=official)
 Most official programming language images have these standard base images:<br>
-* slim - based on debian:jessie (or someting later now). This is stability releases.
+* slim - lightweight linux based on debian:buster
 * alpine - super lightweight linux
-* wheezy - older version of debian
+* buster - debian 10
+* stretch - debian 9
 
 ## Alpine linux
-Alpine is made "FROM scratch" (meaning that you start from nothing in your Dockerfile)
-
+[Alpine Linux](https://github.com/alpinelinux) is a security-oriented, lightweight Linux distribution based on musl libc and busybox.

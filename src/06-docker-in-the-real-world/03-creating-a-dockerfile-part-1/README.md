@@ -211,7 +211,7 @@ docker container rm focused_lichterman
 focused_lichterman
 ~~~~
 
-# Container modifications
+# container modifications
 ## production deployments
 Your source code should be in version control. The source code should be copied while building images in a lifecycle process and with ci/cd.
 
@@ -245,7 +245,7 @@ docker container exec --interactive --tty --user "$(id -u):$(id -g)" app_1 touch
 
 ~~~~
 
-# Troubleshooting
+# troubleshooting
 ## see what's going on - docker exec
 See "connecting to containers" section in this readme.
 
