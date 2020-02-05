@@ -55,8 +55,80 @@ This will for example show:
 * The layers' full hash values
 * The CMD (i.e. the command that will be run)
 
-# docker push
-Before you can push to a location, you need to authenticate to it with docker login [your repo]
+## Delete your build
+You can delete a single image by referring to the image name or the image id
+~~~~
+# repo version
+docker image rm web1
+
+# id version
+docker image rm 8ca3c1d726bd 
+~~~~
+In our dockerhub example we have the same image hash locally as remote. What if we want to delete both of them at the same time?<br>
+Well, you can delete multiple images with the same hash from multiple repos with the --force flag.<br>
+Note how this doesn't delete the image from the registry, it only deletes your local image.
+~~~~
+# Doesn't work unforced
+docker image rm 450c181ac5eb        
+Error response from daemon: conflict: unable to delete 450c181ac5eb (must be forced) - image is referenced in multiple repositories
+
+# Works with force
+docker image rm --force 450c181ac5eb
+Untagged: web1:latest
+Untagged: paak/web1:latest
+Untagged: paak/web1@sha256:5aa1ed36b047ed12c5ac8d4bf1d3637552eb494be6cb00d8b733f13e79537468
+Deleted: sha256:450c181ac5ebb685f6b61015c54a9a2b7968a96326e278711135a8d8c9305b02
+Deleted: sha256:108985979a09137089460c5f4cf490a7e7df228fbf24b87b7e828e35a19e4d5e
+Deleted: sha256:b9232a46619cf200a86eeed524c33f99346d5379c00e68c93d91b8a278dd04f8
+Deleted: sha256:5529e9a6a04329b02e9ff99af6fdb2c3ac26eb4d4a946c1d50235e9966852e3d
+
+~~~~
+
+# docker tag
+For dockerhub, you need to tag your image with your username/reponame:tag<br>
+I think the same applies to AWS ECR as well.
 ~~~~
 docker image tag web1 paak/web1:latest
+~~~~
+In my case, the image then lands at [my dockerhub page](https://hub.docker.com/r/paak/)
+
+You can't remove a tag, but you can change tags on images if you want.
+~~~~
+docker image tag paak/web1:latest web1:latest
+~~~~
+
+# docker push
+Before you can push to a registry, you need to authenticate to the registry with docker login [your repo].
+~~~~
+# Docker assumes dockerhub if you don't specify a registry
+docker login 
+~~~~
+Then push
+~~~~
+docker push paak/web1:latest
+~~~~
+We can view my image at [my dockerhub page](https://hub.docker.com/r/paak/)
+
+# docker run
+## run containers
+`--interactive` `--tty` or `-it` enables Ctrl-C sequence, terminal colours and interactivity.<br>
+`--rm` automatically removes the container when it exits.<br>
+`--env` or `-e` passes in environment variables<br>
+`--name` names your container. If this isn't supplied, docker will generate a name for you.
+~~~~
+# long version
+docker container run --interactive --tty --publish 5000:5000 --name my_flask_app --rm --env FLASK_APP=app.py web1
+
+# short version
+docker container run -it -p 5000:5000
+~~~~
+
+## view running containers
+Utilise the `docker container ls -a` command to view all running and stopped containers.<br>
+Note how the stopped containers don't consume much space, but it's nice to have it tidy, so do utilise the `--rm` flag when running an image to not have exited containers lying around.
+~~~~
+docker container ls -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                    PORTS                    NAMES
+477f07cdcff4        web1                "/bin/sh -c 'flask r…"   15 seconds ago      Up 14 seconds             0.0.0.0:5000->5000/tcp   my_flask_app
+03c371f26868        hello-world         "/hello"                 40 hours ago        Exited (0) 40 hours ago                            focused_lichterman
 ~~~~
