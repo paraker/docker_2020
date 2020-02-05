@@ -11,7 +11,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>" \
+LABEL maintainer="Par Will <par.will@whatever.com>" \
       version="2.0"
 
 VOLUME ["/app/public"]

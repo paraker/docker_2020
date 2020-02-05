@@ -10,6 +10,6 @@ COPY . .
 
 RUN python manage.py collectstatic --noinput
 
-LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
+LABEL maintainer="Par Will <par.will@whatever.com>"
 
 CMD gunicorn -c gunicorn.py "hello.wsgi:application"

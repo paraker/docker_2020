@@ -10,6 +10,6 @@ COPY . .
 RUN go get ./ && go get github.com/pilu/fresh
 RUN go build
 
-LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
+LABEL maintainer="Par Will <par.will@whatever.com>"
 
 CMD go run app.go

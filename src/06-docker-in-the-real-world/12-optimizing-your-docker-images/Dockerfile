@@ -1,6 +1,6 @@
 # Updates:
 #   Nov 2019: Update base Docker image to use a more recent version of Python
-FROM python:3.7.5-alpine
+FROM python:3.7.6-alpine
 
 RUN mkdir /app
 WORKDIR /app
@@ -8,6 +8,8 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 
 RUN apk add --no-cache --virtual .build-deps \
+    # add your packages here, such as htop aaa bbb ccc
+    htop \
     && pip install -r requirements.txt \
     && find /usr/local \
         \( -type d -a -name test -o -name tests \) \
@@ -25,7 +27,7 @@ RUN apk add --no-cache --virtual .build-deps \
 
 COPY . .
 
-LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>" \
+LABEL maintainer="Par Will <par.will@whatever.com>" \
       version="1.0"
 
 VOLUME ["/app/public"]

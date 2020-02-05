@@ -1,1 +1,16 @@
+# Comments are made with hashes
+
+# ignore the .dockerignore file itself
 .dockerignore
+
+# ignore the .git directory. the trailing slash is not needed, just there to show humans it's a directory
+.git/
+
+# ignore all files in the hidden .foo directory, but allow the directory itself
+.foo/*
+
+# ignore all swap files from all directories
+**/*.swp
+
+# this will override the above swap ignore for a file called special.swp
+!special.swp

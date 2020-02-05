@@ -8,6 +8,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
+LABEL maintainer="Par Will <par.will@whatever.com>"
 
 CMD gunicorn -c gunicorn.py "hello.app:create_app()"

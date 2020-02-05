@@ -2,7 +2,7 @@
 see Dockerfile for inline documentation
 
 # docker build
-## build your build
+## build your image
 Builds a docker image with the repo web1 in the current directory. Note how tags for the repo are set with repo:tag!
 ~~~~
 # short version
@@ -39,7 +39,7 @@ Step 2/8 : RUN mkdir /app
 ~~~~
 If a layer changes, every layer after that layer that was changed is rebuilt too, without using cache.
 
-## inspect your build
+## inspect your image
 You can print information about your build with `docker image inspect <repo>`
 ~~~~
 docker image inspect web1
@@ -51,7 +51,7 @@ This will for example show:
 * The CMD (i.e. the command that will be run)
 * The network configuration, i.e. bridged or overlay
 
-## delete your build
+## delete your image
 You can delete a single image by referring to the image name or the image id
 ~~~~
 # repo version

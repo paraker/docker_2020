@@ -10,6 +10,6 @@ RUN npm install && mv node_modules /node_modules
 
 COPY . .
 
-LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
+LABEL maintainer="Par Will <par.will@whatever.com>"
 
 CMD node server.js

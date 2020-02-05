@@ -14,6 +14,6 @@ COPY . .
 # your assets. They do not need to be populated by real values.
 RUN bundle exec rake RAILS_ENV=production DATABASE_URL=postgresql://user:pass@127.0.0.1/dbname SECRET_TOKEN=dummytoken assets:precompile
 
-LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
+LABEL maintainer="Par Will <par.will@whatever.com>"
 
 CMD puma -C config/puma.rb

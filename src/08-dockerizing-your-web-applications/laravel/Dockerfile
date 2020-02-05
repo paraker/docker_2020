@@ -14,6 +14,6 @@ RUN chmod +x artisan
 
 RUN composer dump-autoload --optimize && composer run-script post-install-cmd
 
-LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
+LABEL maintainer="Par Will <par.will@whatever.com>"
 
 CMD php artisan serve --host 0.0.0.0 --port 5000
