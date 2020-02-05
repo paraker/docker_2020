@@ -115,6 +115,7 @@ We can view my image at [my dockerhub page](https://hub.docker.com/r/paak/)
 `--name` names your container. If this isn't supplied, docker will generate a name for you.<br>
 `--detach` or `-d` runs the container in the background and just prints a container id to standard out.<br>
 `--restart on-failure[:max-retries] / always` automatically restarts the container if it would fail. This conflicts with the `--rm` flag.
+`--volume "local dir:container dir"` or `-v` mounts a persistent host volume. Used for quick development purposes only. Note that syntax changes per OS! for MacOS the quotes are mandatory. For linux they are not. Windows needs full busybox style path like `/c/Users/USER_NAME/workspace/your_app_dir`
 ~~~~
 # long version
 docker container run --interactive --tty --publish 5000:5000 --name my_flask_app --rm --env FLASK_APP=app.py web1
@@ -125,8 +126,11 @@ docker container run -it -p 5000:5000 --name my_flask_app --rm -e FLASK_APP=app.
 # run container in background
 docker container run --interactive --tty --publish 5000:5000 --name my_flask_app --rm --env FLASK_APP=app.py --detach web1
 
-# run container in backgroun short version
+# run container in background short version
 docker container run -itd -p 5000:5000 --name my_flask_app --rm -e FLASK_APP=app.py web1
+
+# run container with volume
+docker container run --interactive --tty --publish 5000:5000 --name my_flask_app --rm --env FLASK_APP=app.py --env FLASK_DEBUG=1 --volume "$PWD:/app" --detach web1
 ~~~~
 
 # view containers
@@ -159,6 +163,35 @@ d843c9e35be6        my_flask_app        0.01%               20.66MiB / 15.11GiB 
 
 ~~~~
 
+## view container specs
+To get detailed info from running containers you can issue `docker container inspect [container name/id]`.
+This give you details such as:
+* volume mounts
+* port bindings
+~~~~
+docker container inspect my_flask_app 
+---
+"Mounts": [
+    {
+        "Type": "bind",
+        "Source": "/home/paak/workspace/training/docker_2020/src/06-docker-in-the-real-world/03-creating-a-dockerfile-part-1",
+        "Destination": "/app",
+        "Mode": "",
+        "RW": true,
+        "Propagation": "rprivate"
+    }
+],
+~~~~
+
+# connecting to containers
+To connect to a running container you can run the `docker container exec --interactive --tty [container name/id] [command]` command. Where `command` is what you want to execute.
+
+~~~~
+# run a shell in an alpine container called web_1
+docker container exec --interactive --tty web_1 sh
+# exit with Ctrl-D
+~~~~
+
 # stopping containers
 To stop your containers you can run`docker container stop [container name/id]`.<br>
 Depending on the `--rm` or the `--restart` flag settings, the container will either be deleted or exited.<br>
@@ -186,5 +219,36 @@ See `Dockerfile` and `docker build` topics in this readme to declare and build y
 To quickly be able to reiterate over docker builds you may edit containers as they are running.<br>
 
 By edit the containers we refer to mounting a `volume` containing the source code to our app.<br>
-Modifications to the volume are happening live in the running container (well, with caveats depending on distro, for example [alpine linux's inotifyd](https://wiki.alpinelinux.org/wiki/Inotifyd))<br>
+Modifications to the volume are happening live in the running container (well, with caveats depending on distro, for example [alpine linux's inotifyd](https://wiki.alpinelinux.org/wiki/Inotifyd)'s issues with virtualbox and hyperv')<br>
 This volume is persistent to the `docker host` and circumvents the idempotence of the container.<br>
+
+### mount volumes
+
+### user/group for files written to disk (linux only)
+Say that you mount volumes on linux and create files through `docker exec`. By default, this will resort to the `root` user in the container's user space.<br>
+As such, you may end up witf files owned by `root` on your local disk.<br>
+
+~~~~
+# create test.txt as default user (root)
+docker container exec --interactive --tty app_1 touch test.txt
+
+ll
+-rw-r--r-- 1 root root      0 Feb  5 16:12 test.txt
+
+~~~~
+Instead, we can use the `--user` flag to create files with a specified user.
+~~~~
+# execute commands with the logged in user and that user's group id
+docker container exec --interactive --tty --user "$(id -u):$(id -g)" app_1 touch test.txt
+
+~~~~
+
+# Troubleshooting
+## see what's going on - docker exec
+See "connecting to containers" section in this readme.
+
+## base image for Desktop OS development
+For local tinkering with docker containers do note that alpine linux is super slim and its kernel modules are made for linux primarily.<br>
+If you're running into issues such as file system changes not appearing, you may change to a more friendly linux distro as your base image.<br>
+Most official images have a few options, so go ahead and test ubuntu, slim (Debian) or the like.<br>
+These may work better with Virtualbox, HyperV and Hyperkit.
