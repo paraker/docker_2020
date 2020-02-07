@@ -92,7 +92,7 @@ Build Cache         0                   0                   0B                  
 ~~~~
 
 ## clean up dangling images
-`dangling images` are images that have the <none> <none>
+`dangling images` are images that have the \<none\> \<none\>
 You can clean up dangling images by issuing the `docker image prune` command.
 ~~~~
 docker image prune 
