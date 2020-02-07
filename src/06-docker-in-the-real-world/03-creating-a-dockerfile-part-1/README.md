@@ -80,6 +80,30 @@ Deleted: sha256:5529e9a6a04329b02e9ff99af6fdb2c3ac26eb4d4a946c1d50235e9966852e3d
 
 ~~~~
 
+## disk space used by images
+To see currently used and reclaimable disk space you can use the `docker system df` command.
+~~~~
+docker system df      
+TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
+Images              14                  1                   412.1MB             313.9MB (76%)
+Containers          1                   1                   0B                  0B
+Local Volumes       1                   1                   113B                0B (0%)
+Build Cache         0                   0                   0B                  0B
+~~~~
+
+## clean up dangling images
+`dangling images` are images that have the <none> <none>
+You can clean up dangling images by issuing the `docker image prune` command.
+~~~~
+docker image prune 
+WARNING! This will remove all dangling images.
+Are you sure you want to continue? [y/N] y
+Deleted Images:
+deleted: sha256:450c181ac5ebb685f6b61015c54a9a2b7968a96326e278711135a8d8c9305b02
+deleted: sha256:5529e9a6a04329b02e9ff99af6fdb2c3ac26eb4d4a946c1d50235e9966852e3d
+
+~~~~
+
 # docker tag
 For dockerhub, you need to tag your image with your username/reponame:tag<br>
 I think the same applies to AWS ECR as well.
@@ -201,7 +225,7 @@ NOTE: The manual stop of a container will NOT trigger a restart even if the `--r
 This is because you manuall intended to stop the image.<br>
 However, an event like you shutting down the docker service will indeed restart the container.
 ~~~~
-docker container stop my_flask_app 
+docker container stop my_flask_app my_other_container
 ~~~~
 
 # delete containers
