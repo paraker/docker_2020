@@ -1,7 +1,7 @@
 # Updates:
 #   Nov 2019: Update base Docker image to use a more recent version of Python
 #             You can also use python:3.7.5-slim-buster for a Debian image
-FROM python:3.7.5-alpine
+FROM python:3.7.6-alpine
 
 RUN mkdir /app
 WORKDIR /app
