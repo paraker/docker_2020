@@ -81,20 +81,31 @@ Deleted: sha256:5529e9a6a04329b02e9ff99af6fdb2c3ac26eb4d4a946c1d50235e9966852e3d
 ~~~~
 
 ## disk space used by images
-To see currently used and reclaimable disk space you can use the `docker system df` command.
+To see currently used and reclaimable disk space you can use the `docker system df` command.<br>
+Note how the RECLAIMABLE space is if you would delete all local images, not how much you can get rid of with a prune.
 ~~~~
+docker system df           
+TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
+Images              9                   0                   385.7MB             385.7MB (100%)
+Containers          0                   0                   0B                  0B
+Local Volumes       1                   0                   113B                113B (100%)
+Build Cache         0                   0                   0B                  0B
+~~~~
+
+## clean up dangling images
+`dangling images` are images that have the \<none\> \<none\> tag on them.<br>
+These are images that can be safely cleaned up.<br>
+You can clean up dangling images by issuing the `docker image prune` command.
+~~~~
+# issue docker system df to see used space first
 docker system df      
 TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
 Images              14                  1                   412.1MB             313.9MB (76%)
 Containers          1                   1                   0B                  0B
 Local Volumes       1                   1                   113B                0B (0%)
 Build Cache         0                   0                   0B                  0B
-~~~~
 
-## clean up dangling images
-`dangling images` are images that have the \<none\> \<none\>
-You can clean up dangling images by issuing the `docker image prune` command.
-~~~~
+# clear dangling images
 docker image prune 
 WARNING! This will remove all dangling images.
 Are you sure you want to continue? [y/N] y
@@ -102,7 +113,19 @@ Deleted Images:
 deleted: sha256:450c181ac5ebb685f6b61015c54a9a2b7968a96326e278711135a8d8c9305b02
 deleted: sha256:5529e9a6a04329b02e9ff99af6fdb2c3ac26eb4d4a946c1d50235e9966852e3d
 
+# new docker system df to show that we cleaned up a little bit of space
+
+docker system df  
+TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
+Images              9                   1                   385.7MB             287.5MB (74%)
+Containers          1                   1                   0B                  0B
+Local Volumes       1                   1                   113B                0B (0%)
+Build Cache         0                   0                   0B                  0B
+
 ~~~~
+To fully clean up your system you can run a `docker image prune -a`.<br>
+This will clean up all images that do not have a container associated with them. Effectively putting your system to a clean slate. <br>
+This is a tad drastic, use with caution.
 
 # docker tag
 For dockerhub, you need to tag your image with your username/reponame:tag<br>
