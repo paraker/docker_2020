@@ -26,7 +26,7 @@
 * bespoke entrypoint for scalability
 
 ## Docker compose at [src/docker-compose-in-the-real-world/web-app](https://github.com/paraker/docker_2020/tree/master/src/07-docker-compose-in-the-real-world/03-adding-docker-compose-support-to-our-web-app)
-*
+* orchestrate multiple containers and dependencies in projects with yaml files
 
 
 ## Topics
