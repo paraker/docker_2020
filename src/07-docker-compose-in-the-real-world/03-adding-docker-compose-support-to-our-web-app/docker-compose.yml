@@ -1,0 +1,26 @@
+version: '3'
+
+services: # defines our containers
+  redis:  # our redis container definition
+    image: 'redis:5.0.7-alpine'  # use this image from dockerhub
+    ports:
+      - '6379:6379'  # expose ports
+    volumes:
+      - 'redis:/data'  # named volume
+
+  web:  # our web server container definition
+    build: '.'  # build from pwd rather than pull from dockerhub
+    depends_on:
+      - 'redis'  # creates a dependency on the redis container, so it's started prior to the web container
+    env_file:
+      - '.env'  # loads an environment file
+      # - 'env.production'  multiple files can be listed here. This would override the above env file.
+    #image: 'paak/web:1.0'   This syntax can be used for tagging for images that are to be pushed to a registry.
+    # We won't push anything now, so commenting that out.
+    ports:
+      - '5000:5000'  # expose ports
+    volumes:
+      - '.:/app'  # add this non-named volume
+
+volumes:  # required for named volumes I think, such as our redis container
+  redis: {}
