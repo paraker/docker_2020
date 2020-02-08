@@ -250,6 +250,11 @@ However, an event like you shutting down the docker service will indeed restart 
 ~~~~
 docker container stop my_flask_app my_other_container
 ~~~~
+If you want to stop all running containers you can do this trick:
+~~~~
+# -q is for quiet mode that outputs only the container hash
+docker container stop $(docker container ls -a -q)
+~~~~
 
 # delete containers
 If you do happen to have containers you want to delete you can issue `docker container rm [name or id]` to remove them.
