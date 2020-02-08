@@ -1,6 +1,6 @@
 # Overview
 ## Docker basics at [src/docker-in-the-real-world/basics](https://github.com/paraker/docker_2020/tree/master/src/06-docker-in-the-real-world/03-creating-a-dockerfile-part-1)
-* sample Dockerfile
+* [Sample Dockerfile with explanations](https://github.com/paraker/docker_2020/blob/master/src/06-docker-in-the-real-world/03-creating-a-dockerfile-part-1/Dockerfile)
 * build docker images
 * inspect, tag, push and delete images
 * clean up images
@@ -27,7 +27,3 @@
 
 ## Docker compose at [src/docker-compose-in-the-real-world/web-app](https://github.com/paraker/docker_2020/tree/master/src/07-docker-compose-in-the-real-world/03-adding-docker-compose-support-to-our-web-app)
 * orchestrate multiple containers and dependencies in projects with yaml files
-
-
-## Topics
-[Sample Dockerfile with explanations](https://github.com/paraker/docker_2020/blob/master/src/06-docker-in-the-real-world/03-creating-a-dockerfile-part-1/Dockerfile)
